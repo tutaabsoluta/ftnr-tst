@@ -1,10 +1,9 @@
 import { useState, useRef } from "react";
 
 function App() {
-  const smallItemsCount = 8;
-  const radius = 120;
+  const smallItemsCount = 6;
+  const radius = 400;
   const stepAngle = 360 / smallItemsCount;
-
   const [rotation, setRotation] = useState(0);
 
   const dragStartX = useRef(null);
@@ -28,7 +27,7 @@ function App() {
 
     if (Math.abs(diffX) > threshold) {
       setRotation((prev) => prev + (diffX > 0 ? stepAngle : -stepAngle));
-      hasRotated.current = true; 
+      hasRotated.current = true;
     }
   }
 
@@ -47,7 +46,7 @@ function App() {
       <h1 className="text-6xl uppercase mb-10">Hola Mundo</h1>
 
       <div
-        className="relative w-64 h-64"
+        className="relative w-[500px] h-[500px]"
         style={{
           transform: `rotate(${rotation}deg)`,
           transition: "transform 0.7s ease",
@@ -59,28 +58,43 @@ function App() {
         <img
           src="Llanta.png"
           alt="Llanta"
-          className="absolute top-1/2 left-1/2 w-40 h-40 -translate-x-1/2 -translate-y-1/2"
+          className="absolute top-1/2 left-1/2 w-[400px] h-auto -translate-x-1/2 -translate-y-1/2"
           draggable={false}
         />
 
         {smallItems.map((_, i) => {
-          const angle = (360 / smallItemsCount) * i;
-          const x = radius * Math.cos((angle * Math.PI) / 180);
-          const y = radius * Math.sin((angle * Math.PI) / 180);
+          const fixedAngles = [0, 60, 120, 180, -120, -60];
+          const angle = fixedAngles[i];
+          const adjustedAngle = angle - 90; // Aquí el ajuste para que 0° quede arriba
+
+          const x = radius * Math.cos((adjustedAngle * Math.PI) / 180);
+          const y = radius * Math.sin((adjustedAngle * Math.PI) / 180);
 
           return (
             <div
               key={i}
-              className="absolute w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold select-none cursor-pointer active:cursor-grabbing"
+              className="absolute w-[250px] h-[250px] bg-blue-500 rounded-xl flex items-center justify-center text-white font-bold select-none cursor-pointer active:cursor-grabbing"
               style={{
                 top: `calc(50% + ${y}px)`,
                 left: `calc(50% + ${x}px)`,
-                transform: "translate(-50%, -50%)",
+                transform: `translate(-50%, -50%) rotate(${angle}deg)`,
                 userSelect: "none",
               }}
               draggable={false}
             >
-              {i + 1}
+              <img
+                src="021.jpg"
+                alt=""
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "inherit",
+                  userSelect: "none",
+                  pointerEvents: "none",
+                }}
+                draggable={false}
+              />
             </div>
           );
         })}
