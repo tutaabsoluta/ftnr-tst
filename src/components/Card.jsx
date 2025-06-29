@@ -1,5 +1,5 @@
 export const Card = ({ text, i }) => {
-  const radius = 400;
+  const radius = 350;
 
   const fixedAngles = [0, 60, 120, 180, -120, -60];
   const angle = fixedAngles[i];
@@ -12,7 +12,7 @@ export const Card = ({ text, i }) => {
     <div
       key={i}
       data-draggable
-      className="absolute w-[250px] h-[250px] bg-blue-500 rounded-xl flex items-center justify-center text-white font-bold select-none cursor-pointer active:cursor-grabbing"
+      className="absolute w-[250px] h-[215px] bg-white rounded-2xl flex items-center justify-center text-white font-bold select-none cursor-pointer active:cursor-grabbing"
       style={{
         top: `calc(50% + ${y}px)`,
         left: `calc(50% + ${x}px)`,
@@ -24,7 +24,8 @@ export const Card = ({ text, i }) => {
       <div>
         <img
           src="021.jpg"
-          alt=""
+          alt="Activity Image"
+          className="px-[11px]"
           style={{
             width: "100%",
             height: "100%",
@@ -35,7 +36,7 @@ export const Card = ({ text, i }) => {
           }}
           draggable={false}
         />
-        <h2>{text}</h2>
+        <h2 className="text-black tracking-wide text-center mt-4">{text}</h2>
       </div>
     </div>
   );

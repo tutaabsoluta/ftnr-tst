@@ -34,16 +34,15 @@ function App() {
     hasRotated.current = false;
   }
 
+  const fixedAngles = [0, 60, 120, 180, -120, -60];
 
   return (
     <div
-      className="flex flex-col items-center justify-center min-h-screen bg-gray-100 select-none"
+      className="flex flex-col items-center justify-center min-h-screen bg-black select-none"
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
       onMouseLeave={onMouseUp}
     >
-      <h1 className="text-6xl uppercase mb-10">Hola Mundo</h1>
-
       <div
         className="relative w-[500px] h-[500px]"
         style={{
@@ -60,11 +59,34 @@ function App() {
           className="absolute top-1/2 left-1/2 w-[400px] h-auto -translate-x-1/2 -translate-y-1/2"
           draggable={false}
         />
-        {
-          items.map( ( item, index ) => (
-            <Card text={ item.text } i = { index } />
-          ) )
-        }
+
+        {/* Cards */}
+        {items.map((item, index) => (
+          <Card key={index} text={item.text} i={index} />
+        ))}
+
+        {/* Círculo rojo */}
+        <div className="absolute top-1/2 left-1/2 w-[450px] h-[450px] border border-red-800 rounded-full -translate-x-1/2 -translate-y-1/2 z-10" />
+
+        {/* Puntos rojos */}
+        {fixedAngles.map((angle, index) => {
+          const radius = 225;
+          const rad = (angle - 90) * (Math.PI / 180);
+          const x = radius * Math.cos(rad);
+          const y = radius * Math.sin(rad);
+
+          return (
+            <div
+              key={index}
+              className="absolute w-1 h-1 bg-red-500 rounded-full z-20"
+              style={{
+                top: `calc(50% + ${y}px)`,
+                left: `calc(50% + ${x}px)`,
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+          );
+        })}
       </div>
     </div>
   );
