@@ -1,8 +1,25 @@
+import { useState, useEffect } from "react";
+
 export const Card = ({ text, i, isActive }) => {
-  const radius = 310;
   const fixedAngles = [0, 60, 120, 180, -120, -60];
   const angle = fixedAngles[i];
   const adjustedAngle = angle - 90;
+
+  const [radius, setRadius] = useState(230);
+
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 1280) {
+        setRadius(310);
+      } else {
+        setRadius(235);
+      }
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const x = radius * Math.cos((adjustedAngle * Math.PI) / 180);
   const y = radius * Math.sin((adjustedAngle * Math.PI) / 180);
@@ -10,9 +27,9 @@ export const Card = ({ text, i, isActive }) => {
   return (
     <div
       data-draggable
-      className={`z2 absolute w-[170px] h-[150px] rounded-2xl flex items-center justify-center font-bold select-none cursor-pointer active:cursor-grabbing transition-all duration-300 ${
+      className={`absolute w-[170px] h-[150px] rounded-2xl flex items-center justify-center font-bold select-none cursor-pointer active:cursor-grabbing transition-all duration-300 text-xs ${
         isActive
-          ? "bg-white shadow-2xl scale-110 z-20 w-[280px] h-[260px]"
+          ? "bg-white shadow-2xl scale-110 z-20 md:w-[280px] md:h-[260px]"
           : "bg-gray-200 opacity-60 z-10"
       }`}
       style={{
@@ -39,8 +56,8 @@ export const Card = ({ text, i, isActive }) => {
           draggable={false}
         />
         <h2
-          className={`text-black tracking-wide text-center mt-3 transition-all duration-300 ${
-            isActive ? "text-xl" : "text-xs"
+          className={`text-black tracking-wide text-center mt-4 transition-all duration-300 ${
+            isActive ? "md:text-xl" : "md:text-xs"
           }`}
         >
           {text}

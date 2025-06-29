@@ -57,16 +57,22 @@ function App() {
 
   const fixedAngles = [0, 60, 120, 180, -120, -60];
 
+  const getRadius = () => {
+    if (window.innerWidth < 640) return 155;
+    if (window.innerWidth < 768) return 185;
+    return 225; 
+  };
+
   return (
     <>
       <div
-        className="flex flex-col items-center justify-center min-h-screen bg-black select-none overflow-hidden relative"
+        className="flex flex-col items-center justify-center min-h-screen pt-56 md:pt-[200px] 2xl:pt-0 select-none overflow-hidden relative"
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseUp}
       >
         <div
-          className="relative w-[500px] h-[500px] mx-auto"
+          className="relative w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] mx-auto"
           style={{
             transform: `rotate(${rotation}deg)`,
             transition: "transform 0.7s ease",
@@ -77,7 +83,7 @@ function App() {
           <img
             src="Llanta.png"
             alt="Llanta"
-            className="absolute top-1/2 left-1/2 w-[400px] h-auto -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-1/2 left-1/2 w-[280px] sm:w-[380px] md:w-[400px] h-auto -translate-x-1/2 -translate-y-1/2"
             draggable={false}
           />
 
@@ -90,10 +96,10 @@ function App() {
             />
           ))}
 
-          <div className="absolute top-1/2 left-1/2 w-[450px] h-[450px] border border-red-800 rounded-full -translate-x-1/2 -translate-y-1/2 z-10" />
+          <div className="absolute top-1/2 left-1/2 w-[310px] h-[310px] sm:w-[370px] sm:h-[370px] md:w-[450px] md:h-[450px] border border-red-800 rounded-full -translate-x-1/2 -translate-y-1/2 z-10" />
 
           {fixedAngles.map((angle, index) => {
-            const radius = 225;
+            const radius = getRadius();
             const rad = (angle - 90) * (Math.PI / 180);
             const x = radius * Math.cos(rad);
             const y = radius * Math.sin(rad);
@@ -113,7 +119,7 @@ function App() {
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-black z-30"></div>
+      <div className="absolute bottom-[-110px] md:bottom-[-170px] 2xl:bottom-0 left-0 w-full h-1/2 bg-black z-30"></div>
     </>
   );
 }
