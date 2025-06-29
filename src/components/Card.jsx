@@ -1,6 +1,5 @@
-export const Card = ({ text, i }) => {
-  const radius = 350;
-
+export const Card = ({ text, i, isActive }) => {
+  const radius = 310;
   const fixedAngles = [0, 60, 120, 180, -120, -60];
   const angle = fixedAngles[i];
   const adjustedAngle = angle - 90;
@@ -10,9 +9,12 @@ export const Card = ({ text, i }) => {
 
   return (
     <div
-      key={i}
       data-draggable
-      className="absolute w-[250px] h-[215px] bg-white rounded-2xl flex items-center justify-center text-white font-bold select-none cursor-pointer active:cursor-grabbing"
+      className={`z2 absolute w-[170px] h-[150px] rounded-2xl flex items-center justify-center font-bold select-none cursor-pointer active:cursor-grabbing transition-all duration-300 ${
+        isActive
+          ? "bg-white shadow-2xl scale-110 z-20 w-[280px] h-[260px]"
+          : "bg-gray-200 opacity-60 z-10"
+      }`}
       style={{
         top: `calc(50% + ${y}px)`,
         left: `calc(50% + ${x}px)`,
@@ -25,7 +27,7 @@ export const Card = ({ text, i }) => {
         <img
           src="021.jpg"
           alt="Activity Image"
-          className="px-[11px]"
+          className="px-[10px]"
           style={{
             width: "100%",
             height: "100%",
@@ -36,7 +38,13 @@ export const Card = ({ text, i }) => {
           }}
           draggable={false}
         />
-        <h2 className="text-black tracking-wide text-center mt-4">{text}</h2>
+        <h2
+          className={`text-black tracking-wide text-center mt-3 transition-all duration-300 ${
+            isActive ? "text-xl" : "text-xs"
+          }`}
+        >
+          {text}
+        </h2>
       </div>
     </div>
   );
