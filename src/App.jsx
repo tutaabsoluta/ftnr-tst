@@ -38,7 +38,7 @@ function App() {
 
   return (
     <div
-      className="flex flex-col items-center justify-center min-h-screen bg-black select-none"
+      className="flex flex-col items-center justify-center min-h-screen bg-black select-none overflow-hidden"
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
       onMouseLeave={onMouseUp}
